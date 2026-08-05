@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher
+from telebot.async_telebot import AsyncTeleBot
 import config
 from database import init_models
 import handlers
@@ -12,16 +12,15 @@ async def main():
     # Baza jadvallarini yaratish
     await init_models()
 
-    # Bot va Dispatcher ob'ektlarini yaratish
-    bot = Bot(token=config.BOT_TOKEN)
-    dp = Dispatcher()
+    # Bot ob'ektini yaratish
+    bot = AsyncTeleBot(config.BOT_TOKEN)
 
-    # Routerni ulash
-    dp.include_router(handlers.router)
+    # Handlerlarni ro'yxatdan o'tkazish
+    handlers.register_handlers(bot)
 
     # Botni ishga tushirish
     print("Bot ishga tushdi...")
-    await dp.start_polling(bot)
+    await bot.polling(non_stop=True)
 
 if __name__ == "__main__":
     try:
