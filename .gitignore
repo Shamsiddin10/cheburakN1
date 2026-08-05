@@ -1,0 +1,14 @@
+# Environments
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+
+# Database
+*.db
+*.sqlite3
+bot_database.db
